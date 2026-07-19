@@ -1,0 +1,22 @@
+# ═══════════════════════════════════════════════════════════
+#  BADOL-BOT-V5 — Render Deployment Config
+#  Owner: MOHAMMAD BADOL
+# ═══════════════════════════════════════════════════════════
+# এই ফাইলটা Render.com এ deploy করতে ব্যবহার করো।
+# GitHub repo-তে এই ফাইল থাকলে Render auto-detect করবে।
+
+services:
+  - type: web
+    name: BADOL-BOT-V5
+    runtime: node
+    plan: free           # Free plan এ চালাতে পারবে, Hobby plan আরো ভালো
+    region: singapore    # Asia কাছের server — বাংলাদেশের জন্য best
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TZ
+        value: Asia/Dhaka
+    healthCheckPath: /   # Render এই path এ GET request দিয়ে check করবে
+    autoDeploy: true     # GitHub push হলে auto deploy হবে

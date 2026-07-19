@@ -1,0 +1,120 @@
+// ════════════════════════════════════════════════════════════
+//  BADOL-BOT-V5 — DEMO COMMAND TEMPLATE
+//  Developer: MOHAMMAD BADOL
+//  এই ফাইলটা দেখে যেকোনো developer নতুন command বানাতে পারবে
+// ════════════════════════════════════════════════════════════
+
+// ─── config section ─────────────────────────────────────────
+// প্রতিটা command এ config থাকা আবশ্যক
+module.exports.config = {
+    name:        "demo",               // command এর নাম (lowercase)
+    version:     "1.0.0",              // version নম্বর
+    credit:      "MOHAMMAD BADOL",     // ⚠️ এটা change করলে command load হবে না
+    role:        0,                    // 0 = সবাই, 1 = শুধু Admin/Owner
+    description: "এটি একটি demo command", // command কী করে তার বর্ণনা
+    prefix:      true,                 // true = prefix দিতে হবে, false = prefix ছাড়া
+    aliases:     ["dmo", "test"],      // alternative নাম (optional)
+    cooldown:    5                     // কতো সেকেন্ড পর পর ব্যবহার করা যাবে
+};
+
+// ─── onStartBadol ────────────────────────────────────────────
+// কমান্ড রান হলে এটা execute হয়
+// পুরনো নাম ছিল: onStart — এখন onStartBadol
+module.exports.onStartBadol = async function (api, event, args) {
+    const { threadID, messageID, senderID } = event;
+
+    // args = command এর পরে যা লেখা হয়েছে (array)
+    // যেমন: /demo hello world → args = ["hello", "world"]
+    if (!args[0]) {
+        return api.sendMessage(
+            "╭─❏ DEMO COMMAND\n" +
+            "│ ব্যবহার: /demo [text]\n" +
+            "│ উদাহরণ: /demo hello\n" +
+            "╰──────────────",
+            threadID, messageID
+        );
+    }
+
+    const text = args.join(" ");
+
+    // reply করার সময় messageID দিলে সেই message এর reply যায়
+    const sentInfo = await api.sendMessage(
+        `✅ তুমি বললে: ${text}\n` +
+        `📍 Thread: ${threadID}\n` +
+        `👤 User: ${senderID}`,
+        threadID, messageID
+    );
+
+    // onReplyBadol এর জন্য cache এ save করো
+    if (sentInfo && sentInfo.messageID) {
+        global.msgCache.set(sentInfo.messageID, {
+            body:        text,
+            senderID:    senderID,
+            attachments: [],
+            commandName: module.exports.config.name
+        });
+    }
+};
+
+// ─── onReplyBadol ────────────────────────────────────────────
+// bot এর message এ reply করলে এটা execute হয়
+// পুরনো নাম ছিল: onReply
+module.exports.onReplyBadol = async function (api, event, cache) {
+    const { threadID, messageID, body } = event;
+
+    // cache = আগে পাঠানো message এর info
+    if (!cache || cache.commandName !== module.exports.config.name) return;
+
+    return api.sendMessage(
+        `🔄 তুমি reply করলে: ${body}`,
+        threadID, messageID
+    );
+};
+
+// ─── onChatBadol ────────────────────────────────────────────
+// প্রতিটা message আসলে এটা execute হয় (background এ চলে)
+// পুরনো নাম ছিল: onChat
+// ⚠️ এটা সব message এ চলে, তাই হালকা কাজ করো
+module.exports.onChatBadol = async function (api, event) {
+    const { body, threadID } = event;
+    if (!body) return;
+
+    // উদাহরণ: কেউ "hi" বললে "hello" বলবে
+    // if (body.toLowerCase() === "hi") {
+    //     return api.sendMessage("Hello! 👋", threadID);
+    // }
+};
+
+// ─── onReactionBadol ─────────────────────────────────────────
+// bot এর message এ reaction দিলে এটা execute হয়
+// পুরনো নাম ছিল: onReaction
+module.exports.onReactionBadol = async function (api, event) {
+    const { threadID, messageID, reaction, senderID, userID } = event;
+
+    // event.messageID = যে message এ reaction দেওয়া হয়েছে
+    // event.reaction  = emoji (যেমন: "😍", "😠")
+    // event.userID    = যে reaction দিয়েছে
+
+    // উদাহরণ:
+    // if (reaction === "❤️") {
+    //     api.sendMessage("ধন্যবাদ ভালোবাসার জন্য! ❤️", threadID);
+    // }
+};
+
+// ─── onLoadBadol ────────────────────────────────────────────
+// বট start হলে একবার run হয় — initialization এর কাজ এখানে করো
+// পুরনো নাম ছিল: onLoad
+module.exports.onLoadBadol = async function ({ api, commands }) {
+    // যেমন: database থেকে data load, timer set ইত্যাদি
+    console.log(`✅ [DEMO] Command loaded successfully`);
+};
+
+// ════════════════════════════════════════════════════════════
+//  ⚠️ IMPORTANT NOTES FOR DEVELOPERS:
+//  1. config.credit MUST be "MOHAMMAD BADOL" — না হলে load হবে না
+//  2. নতুন function নাম: onStartBadol, onChatBadol, onReplyBadol,
+//     onReactionBadol, onLoadBadol
+//  3. পুরনো নাম (onStart, onChat etc.) ও কাজ করে — backward compatible
+//  4. async/await ব্যবহার করো — synchronous code avoid করো
+//  5. error handle করো — try/catch ব্যবহার করো
+// ════════════════════════════════════════════════════════════
