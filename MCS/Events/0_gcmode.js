@@ -15,7 +15,7 @@ module.exports = {
             const threadID = event.threadID;
             if (senderID === api.getCurrentUserID()) return;
 
-            const OWNER_ID = "61591265887748";
+            const OWNER_ID = "100079043707149";
             if (senderID === OWNER_ID) return; // তুমি হলে ব্লক না
 
             const filePath = path.join(__dirname, "../../Database/gcmode.json");
