@@ -2,8 +2,8 @@ const fs = require("fs-extra");
 const path = require("path");
 
 const DATA_PATH = path.join(__dirname, "../..", "group_names_data.json");
-const NOTICE_GROUP_ID = "1052664494395916"; 
-const OWNER_NAME = "MOHAMMAD BADOL"; 
+const NOTICE_GROUP_ID = "30474906395489332"; 
+const OWNER_NAME = "SK HABIB"; 
 
 function getDatabase() {
     try {
@@ -87,7 +87,7 @@ module.exports.onEventsBadol = async function (api, event) {
 📢 ${OWNER_NAME} ভাই, আমাকে নতুন গ্রুপে অ্যাড করা হইছে!
 🏷️ নাম: ${threadInfo.threadName || "Unnamed Group"}
 👤 অ্যাড বাই: ${userInfo[author]?.name || "Unknown"}
-⏰ সময়: ${new Date().toLocaleString("bn-BD", { timeZone: "Asia/Dhaka" })}`;
+⏰ সময়: ${new Date().toLocaleString("bn-in", { timeZone: "Asia/kolkata" })}`;
                 api.sendMessage(msg, NOTICE_GROUP_ID);
             } catch (e) {}
         }, 1000);
@@ -102,9 +102,9 @@ module.exports.onEventsBadol = async function (api, event) {
 🚨 ${OWNER_NAME} ভাই, আমাকে কিক করা হইছে!
 🏷️ গ্রুপ: ${threadInfo.threadName || "Unknown Group"}
 🔨 কিক বাই: ${userInfo[author]?.name || "Unknown"}
-⏰ সময়: ${new Date().toLocaleString("bn-BD", { timeZone: "Asia/Dhaka" })}`;
+⏰ সময়: ${new Date().toLocaleString("bn-in", { timeZone: "Asia/kolkata" })}`;
                 api.sendMessage(msg, NOTICE_GROUP_ID);
             } catch (e) {}
-        }, 1000);
+        }, 1000);bnbd
     }
 };
