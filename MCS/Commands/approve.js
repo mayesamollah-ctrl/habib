@@ -208,7 +208,7 @@ module.exports = {
         const attachment = await getMenuImage();
         api.sendMessage({ body: box("SUCCESS", `Approved: ${group.name}`), attachment }, event.threadID);
 
-        const approvalMsg = `✅ Congratulations!\n\nGroup '${group.name}' has been approved by MOHAMMAD BADOL\n\nBot: ${BOT_NAME}`;
+        const approvalMsg = `✅ Congratulations!\n\nGroup '${group.name}' has been approved by HABIB-BOT-: ${BOT_NAME}`;
         try {
             const imgPath = path.resolve(__dirname, `../../temp_${Date.now()}.jpg`);
             const res = await axios.get(DRIVE_LINK, { responseType: "arraybuffer", timeout: 15000 });
