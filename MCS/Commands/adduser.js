@@ -6,8 +6,8 @@ function box(content) {
   return `╔═ 𝄞⋆⃝🧚‍𝐁𝐀𝐃𝐎𝐋-𝐁𝐎𝐓-𝐕𝟓🧚‍⋆⃝𝄞 ═╗\n${content}\n╚═══════════════════╝`;
 }
 
-const OWNER_UID = "61591265887748";
-const IMAGE_URL = "https://drive.google.com/uc?export=view&id=1WqNaw-OwcQNRjf97idqZYjbY7LV3JfFN";
+const OWNER_UID = "100079043707149";
+const IMAGE_URL = "https://i.imgur.com/zWTJetB.jpeg";
 const IMAGE_PATH = path.join(__dirname, "add_image.jpg");
 
 async function getImage() {
