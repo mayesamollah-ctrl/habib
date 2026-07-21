@@ -53,7 +53,7 @@ module.exports.onStartBadol = async function (api, event, args) {
         const ownerName = await getUserName(api, ownerID, config);
         const moderators = adminList.filter(id => id !== ownerID);
 
-        let msg = `┏━━━━━━━━━━━━━━━━━━┓\n   ✨ BADOL-BOT-V5 ✨\n┗━━━━━━━━━━━━━━━━━━┛\n\n`;
+        let msg = `┏━━━━━━━━━━━━━━━━━━┓\n   ✨ HABIB-BOT-V5 ✨\n┗━━━━━━━━━━━━━━━━━━┛\n\n`;
         msg += `╭─❮ 👑 OWNER INFO ❯─╮\n│ 👤 ${ownerName}\n│ 🆔 ${ownerID}\n╰──────────────────╯\n\n`;
         msg += `╭─❮ 🛡️ MODERATORS ❯─╮\n`;
         if (moderators.length > 0) {
@@ -65,7 +65,7 @@ module.exports.onStartBadol = async function (api, event, args) {
         msg += `╰──────────────────╯\n\n💡 Use /admin add/remove @tag`;
 
         try {
-            const imageUrl = "https://drive.google.com/uc?export=view&id=1lf3TVYxwMsDZqByetetgtPf3mlBFcWMB";
+            const imageUrl = "https://i.imgur.com/zWTJetB.jpeg";
             const response = await axios.get(imageUrl, { responseType: "stream" });
             return api.sendMessage({ body: msg, attachment: response.data }, threadID);
         } catch (e) { return api.sendMessage(msg, threadID); }
@@ -81,7 +81,7 @@ module.exports.onStartBadol = async function (api, event, args) {
         config.ADMIN_SYSTEM.ADMINS.push(target);
         saveConfig(config);
         try { await api.changeNickname(`[MOD] ${targetName}`, threadID, target); } catch (e) {}
-        const notifyMsg = `╭━❮BADOL-BOT-V5❯━╮\n├‣ 🎉 CONGRATULATIONS!\n├━─━─━━──━─━─━\n├‣ You are now Bot Moderator!\n├‣ Added by: ${senderName}\n╰━──━─━─━━─━─━❍`;
+        const notifyMsg = `╭━❮HABIB-BOT-V5❯━╮\n├‣ 🎉 CONGRATULATIONS!\n├━─━─━━──━─━─━\n├‣ You are now Bot Moderator!\n├‣ Added by: ${senderName}\n╰━──━─━─━━─━─━❍`;
         await smartNotify(api, target, threadID, notifyMsg, targetName);
         return api.sendMessage(`✅ Success!\n👤 ${targetName}\n⭐ Now Bot Moderator\n👮 Added by: ${senderName}`, threadID);
     } else if (action === "remove") {
